@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free URL Shortener — Shorten Links Online Instantly | ToolHub</title>
+  <meta name="description" content="Shorten any long URL into a clean, shareable link. Free URL shortener with no sign-up required. Copy your short link in seconds.">
+  <meta name="keywords" content="free url shortener, shorten link online, short url generator, url shortener no sign up, link shortener, tiny url alternative">
+  <meta property="og:title" content="Free URL Shortener — ToolHub">
+  <meta property="og:description" content="Shorten any URL into a clean link instantly. Free, no sign-up required.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://toolhub.io/tools/url-shortener">
+  <link rel="canonical" href="https://toolhub.io/tools/url-shortener">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Free URL Shortener",
+    "url": "https://toolhub.io/tools/url-shortener",
+    "description": "Shorten any long URL into a clean, shareable link. Free, no sign-up required.",
+    "applicationCategory": "UtilityApplication",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why should I shorten a URL?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Short URLs are easier to share on social media, in print, and in messages. They look cleaner, are less likely to break in emails, and some platforms have character limits where a short URL saves valuable space." }
+      },
+      {
+        "@type": "Question",
+        "name": "Do shortened URLs expire?",
+        "acceptedAnswer": { "@type": "Answer", "text": "It depends on the service. This demo generates local links. When connected to a real URL shortening API, link expiry depends on the provider — many free tiers keep links active for 30–90 days." }
+      }
+    ]
+  }
+  </script>
+  <style>
+    .url-input-wrap { display: flex; gap: 10px; }
+    .url-input-wrap input { flex: 1; }
+    @media(max-width:500px){ .url-input-wrap { flex-direction: column; } }
+    .result-card {
+      background: var(--surface2); border: 1px solid rgba(200,245,60,0.3);
+      border-radius: var(--radius-sm); padding: 18px;
+      display: none; margin-top: 16px;
+    }
+    .result-card.show { display: block; }
+    .result-short { font-family: var(--mono); font-size: 22px; font-weight: 500; color: var(--accent); word-break: break-all; margin-bottom: 4px; }
+    .result-orig { font-size: 12px; color: var(--muted); word-break: break-all; }
+    .result-actions { display: flex; gap: 8px; margin-top: 14px; }
+    .url-hist-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .url-hist-clear { background: none; border: none; color: var(--muted); font-size: 12px; cursor: pointer; font-family: var(--sans); padding: 0; }
+    .url-hist-clear:hover { color: var(--red); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><span class="logo-dot"></span> ToolHub</a>
+  <div class="nav-links">
+    <a href="qr-code-generator.html" class="nav-link">QR Code</a>
+    <a href="password-generator.html" class="nav-link">Password</a>
+    <a href="word-counter.html" class="nav-link">Word Counter</a>
+    <a href="url-shortener.html" class="nav-link active">URL Shortener</a>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="index.html">ToolHub</a><span>›</span> URL Shortener
+</div>
+
+<div class="page-hero">
+  <h1>Free <em>URL Shortener</em></h1>
+  <p>Turn any long, messy link into a short, clean URL you can share anywhere. No sign-up, no tracking.</p>
+</div>
+
+<main class="tool-page">
+  <div class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-card-title">
+        <div class="tool-icon" style="background:rgba(255,95,87,0.12)">◎</div>
+        <div class="tool-name">URL Shortener</div>
+      </div>
+      <span class="tag" style="background:rgba(200,245,60,0.1);color:var(--accent)">Live</span>
+    </div>
+    <div class="tool-body">
+      <p class="tool-desc">Paste a long URL below and click Shorten. Real short links are generated instantly via TinyURL — they work straight away and never expire.</p>
+
+      <div class="field-group">
+        <label class="field-label">Long URL</label>
+        <div class="url-input-wrap">
+          <input type="url" id="url-input" placeholder="https://very-long-url.com/with/lots/of/parameters?utm_source=example" onkeydown="if(event.key==='Enter')shortenURL()">
+          <button class="btn btn-primary" onclick="shortenURL()" style="white-space:nowrap">Shorten →</button>
+        </div>
+      </div>
+
+      <div class="result-card" id="result-card">
+        <label class="field-label" style="margin-bottom:8px">Your short link</label>
+        <div class="result-short" id="result-short"></div>
+        <div class="result-orig" id="result-orig"></div>
+        <div class="result-actions">
+          <button class="btn btn-primary" onclick="copyResult()" id="copy-result-btn">Copy link</button>
+          <button class="btn btn-ghost" onclick="makeQR()">Generate QR code →</button>
+        </div>
+      </div>
+
+      <!-- History -->
+      <div id="history-wrap" style="margin-top:24px;display:none">
+        <div class="url-hist-header">
+          <label class="field-label" style="margin:0">Recent links</label>
+          <button class="url-hist-clear" onclick="clearHistory()">Clear history</button>
+        </div>
+        <div id="history-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Why shorten? -->
+  <section style="margin-top:40px">
+    <h2 style="font-size:18px;font-weight:600;margin-bottom:14px;letter-spacing:-0.3px">When to use a URL shortener</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px">
+        <div style="font-size:20px;margin-bottom:8px">📱</div>
+        <div style="font-size:13px;font-weight:500;margin-bottom:4px">Social media posts</div>
+        <div style="font-size:13px;color:var(--muted)">Twitter/X, LinkedIn, and Instagram all benefit from shorter, cleaner links that don't dominate your post.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px">
+        <div style="font-size:20px;margin-bottom:8px">🖨️</div>
+        <div style="font-size:13px;font-weight:500;margin-bottom:4px">Print materials</div>
+        <div style="font-size:13px;color:var(--muted)">Flyers, business cards, and posters need short URLs people can actually type. Combine with a QR code for best results.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px">
+        <div style="font-size:20px;margin-bottom:8px">📧</div>
+        <div style="font-size:13px;font-weight:500;margin-bottom:4px">Email campaigns</div>
+        <div style="font-size:13px;color:var(--muted)">Long URLs can break across line-wraps in email clients. Short links are safer and look more professional.</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="faq-section">
+  <h2 class="faq-title">Frequently asked questions</h2>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFAQ(this)">Why should I shorten a URL? <span>+</span></div>
+    <div class="faq-a">Short URLs are easier to share on social media, in print, and in messages. They look cleaner, are less likely to break in emails, and on platforms with character limits (like Twitter/X), a short URL saves valuable space.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFAQ(this)">Do shortened URLs expire? <span>+</span></div>
+    <div class="faq-a">It depends on the service. When connecting a real URL shortening API, link expiry depends on the provider — many free tiers keep links active for 30–90 days. Paid tiers usually offer permanent links.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFAQ(this)">Are short links safe to click? <span>+</span></div>
+    <div class="faq-a">Short links created from legitimate services are safe. Always be cautious with short links from unknown senders. When in doubt, you can preview a link by adding a "+" to the end (e.g. toolhub.io/abc123+) with services that support previews.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFAQ(this)">Can I use short URLs on a QR code? <span>+</span></div>
+    <div class="faq-a">Yes — and it's a great idea. Shorter URLs encode into simpler, less dense QR codes that scan faster and more reliably. Use our URL Shortener first, then paste the short link into the QR Code Generator.</div>
+  </div>
+</section>
+
+<div class="related">
+  <div class="related-title">Other tools you might need</div>
+  <div class="related-grid">
+    <a href="qr-code-generator.html" class="related-card">
+      <div class="related-card-icon">▣</div>
+      <div class="related-card-name">QR Code Generator</div>
+      <div class="related-card-desc">Turn your short URL into a QR code</div>
+    </a>
+    <a href="password-generator.html" class="related-card">
+      <div class="related-card-icon">⬤</div>
+      <div class="related-card-name">Password Generator</div>
+      <div class="related-card-desc">Create secure passwords instantly</div>
+    </a>
+    <a href="word-counter.html" class="related-card">
+      <div class="related-card-icon">◈</div>
+      <div class="related-card-name">Word Counter</div>
+      <div class="related-card-desc">Count words and characters in any text</div>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div style="font-weight:500;margin-bottom:4px">ToolHub</div>
+  <div>Free online tools — no sign-up, no tracking, no ads.</div>
+  <div class="footer-links">
+    <a href="index.html">All Tools</a>
+    <a href="sitemap.xml">Sitemap</a>
+    <a href="#">Privacy</a>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+let urlHistory = JSON.parse(localStorage.getItem('th-url-hist') || '[]');
+let lastShort = '';
+
+async function shortenURL() {
+  const raw = document.getElementById('url-input').value.trim();
+  if (!raw) { showToast('Please enter a URL'); return; }
+
+  let url = raw;
+  if (!url.startsWith('http')) url = 'https://' + url;
+
+  // Check local history cache first to avoid duplicate API calls
+  const existing = urlHistory.find(h => h.original === url);
+  if (existing) {
+    displayResult(existing.short, url);
+    return;
+  }
+
+  // Show loading state
+  const btn = document.querySelector('.btn-primary');
+  const originalText = btn.textContent;
+  btn.textContent = 'Shortening…';
+  btn.disabled = true;
+
+  try {
+    // cleanuri.com — free, no key, CORS-friendly
+    const response = await fetch('https://cleanuri.com/api/v1/shorten', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `url=${encodeURIComponent(url)}`
+    });
+
+    if (!response.ok) throw new Error('API error');
+
+    const data = await response.json();
+    if (!data.result_url) throw new Error('Invalid response');
+
+    const short = data.result_url;
+
+    // Save to history
+    urlHistory.unshift({ original: url, short, created: Date.now() });
+    if (urlHistory.length > 10) urlHistory.pop();
+    try { localStorage.setItem('th-url-hist', JSON.stringify(urlHistory)); } catch(e) {}
+
+    displayResult(short, url);
+
+  } catch (err) {
+    showToast('Could not shorten — check the URL and try again');
+  } finally {
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }
+}
+
+function displayResult(short, original) {
+  lastShort = short;
+  document.getElementById('result-short').textContent = short;
+  document.getElementById('result-orig').textContent = original;
+  document.getElementById('result-card').classList.add('show');
+  renderHistory();
+}
+
+function copyResult() {
+  navigator.clipboard.writeText(lastShort).then(() => {
+    const btn = document.getElementById('copy-result-btn');
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = 'Copy link', 1800);
+    showToast('Short link copied!');
+  });
+}
+
+function copyRaw(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+    showToast('Copied!');
+  });
+}
+
+function makeQR() {
+  window.location.href = `qr-code-generator.html?content=${encodeURIComponent(lastShort)}`;
+}
+
+function clearHistory() {
+  urlHistory = [];
+  try { localStorage.removeItem('th-url-hist'); } catch(e) {}
+  document.getElementById('history-wrap').style.display = 'none';
+}
+
+function renderHistory() {
+  if (urlHistory.length === 0) { document.getElementById('history-wrap').style.display = 'none'; return; }
+  document.getElementById('history-wrap').style.display = 'block';
+  document.getElementById('history-list').innerHTML = urlHistory.map(h => `
+    <div class="url-item">
+      <a href="${h.short}" target="_blank" class="url-item-short">${h.short}</a>
+      <span class="url-item-orig" title="${h.original}">${h.original}</span>
+      <button class="url-copy-mini" onclick="copyRaw('${h.short}',this)">Copy</button>
+    </div>
+  `).join('');
+}
+
+function toggleFAQ(el) { el.parentElement.classList.toggle('open'); }
+
+// Allow Enter key to trigger shortening
+document.getElementById('url-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') shortenURL();
+});
+
+// Pre-fill from QR page cross-link
+const params = new URLSearchParams(location.search);
+if (params.get('url')) { document.getElementById('url-input').value = params.get('url'); }
+
+renderHistory();
+</script>
+</body>
+</html>
