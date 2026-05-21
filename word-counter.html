@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Word Counter — Count Words, Characters & Reading Time Online | ToolHub</title>
+  <meta name="description" content="Count words, characters, sentences, paragraphs, and reading time instantly. Free online word counter — perfect for essays, social media, SEO, and cover letters.">
+  <meta name="keywords" content="word counter online, character count, word count checker, count words free, word count tool, essay word counter, reading time calculator">
+  <meta property="og:title" content="Free Word Counter — ToolHub">
+  <meta property="og:description" content="Instantly count words, characters, sentences, and get reading time. Free, no sign-up.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://toolhub.io/tools/word-counter">
+  <link rel="canonical" href="https://toolhub.io/tools/word-counter">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Word Counter",
+    "url": "https://toolhub.io/tools/word-counter",
+    "description": "Free online word counter. Count words, characters, sentences, paragraphs, and reading time instantly.",
+    "applicationCategory": "UtilityApplication",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How many words is a 5-minute read?",
+        "acceptedAnswer": { "@type": "Answer", "text": "At an average reading speed of 200 words per minute, a 5-minute read is approximately 1,000 words. This tool calculates reading time based on that standard rate." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this tool count characters with or without spaces?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Both. The tool shows total characters (including spaces) and characters without spaces separately. Most social media platforms count characters including spaces." }
+      }
+    ]
+  }
+  </script>
+  <style>
+    .limits-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+    .limits-table th { text-align: left; padding: 8px 12px; color: var(--muted); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.3px; border-bottom: 1px solid var(--border); }
+    .limits-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--muted); }
+    .limits-table td:first-child { color: var(--text); font-weight: 500; }
+    .limits-table tr:last-child td { border-bottom: none; }
+    .top-words { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .top-word { background: var(--surface2); border: 1px solid var(--border); border-radius: 99px; padding: 3px 10px; font-size: 12px; color: var(--muted); font-family: var(--mono); }
+    .density-bar { height: 3px; background: var(--accent); border-radius: 2px; margin-top: 4px; transition: width .3s; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><span class="logo-dot"></span> ToolHub</a>
+  <div class="nav-links">
+    <a href="qr-code-generator.html" class="nav-link">QR Code</a>
+    <a href="password-generator.html" class="nav-link">Password</a>
+    <a href="word-counter.html" class="nav-link active">Word Counter</a>
+    <a href="url-shortener.html" class="nav-link">URL Shortener</a>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="index.html">ToolHub</a><span>›</span> Word Counter
+</div>
+
+<div class="page-hero">
+  <h1>Free <em>Word Counter</em></h1>
+  <p>Paste any text and get instant stats: word count, characters, sentences, paragraphs, and reading time. Works for essays, emails, tweets, and more.</p>
+</div>
+
+<main class="tool-page">
+  <div class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-card-title">
+        <div class="tool-icon" style="background:rgba(183,159,255,0.12)">◈</div>
+        <div class="tool-name">Word Counter</div>
+      </div>
+      <span class="tag" style="background:rgba(183,159,255,0.1);color:var(--purple)">Real-time</span>
+    </div>
+    <div class="tool-body">
+      <p class="tool-desc">Type or paste your text below. Stats update live as you type.</p>
+
+      <div class="field-group">
+        <label class="field-label">Your Text</label>
+        <textarea id="wc-input" placeholder="Paste or type your text here…" oninput="countWords()" style="min-height:160px"></textarea>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-num" id="wc-words">0</div><div class="stat-lbl">Words</div></div>
+        <div class="stat-card"><div class="stat-num" id="wc-chars">0</div><div class="stat-lbl">Characters</div></div>
+        <div class="stat-card"><div class="stat-num" id="wc-chars-no">0</div><div class="stat-lbl">No Spaces</div></div>
+        <div class="stat-card"><div class="stat-num" id="wc-sentences">0</div><div class="stat-lbl">Sentences</div></div>
+        <div class="stat-card"><div class="stat-num" id="wc-paragraphs">0</div><div class="stat-lbl">Paragraphs</div></div>
+        <div class="stat-card"><div class="stat-num" id="wc-read">0</div><div class="stat-lbl">Min Read</div></div>
+      </div>
+
+      <!-- Top words -->
+      <div id="top-words-section" style="margin-top:16px;display:none">
+        <label class="field-label">Top keywords</label>
+        <div class="top-words" id="top-words-list"></div>
+      </div>
+
+      <!-- Platform limits -->
+      <div id="limits-section" style="margin-top:20px;display:none">
+        <label class="field-label">Platform character limits</label>
+        <table class="limits-table">
+          <thead><tr><th>Platform</th><th>Limit</th><th>Status</th></tr></thead>
+          <tbody id="limits-body"></tbody>
+        </table>
+      </div>
+
+      <div class="btn-row" style="margin-top:16px">
+        <button class="btn btn-ghost" onclick="clearWC()">Clear</button>
+        <button class="btn btn-ghost" onclick="copyStats()">Copy stats</button>
+      </div>
+    </div>
+  </div>
+
+  <section style="margin-top:40px">
+    <h2 style="font-size:18px;font-weight:600;margin-bottom:14px;letter-spacing:-0.3px">Common word count targets</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px">
+        <div style="font-size:13px;font-weight:500;margin-bottom:4px">Tweet / X Post</div>
+        <div style="font-family:var(--mono);font-size:20px;color:var(--accent)">280</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px">characters max</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px">
+        <div style="font-size:13px;font-weight:500;margin-bottom:4px">SEO Meta Description</div>
+        <div style="font-family:var(--mono);font-size:20px;color:var(--accent)">160</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px">characters max</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px">
+        <div style="font-size:13px;font-weight:500;margin-bottom:4px">Blog Post</div>
+        <div style="font-family:var(--mono);font-size:20px;color:var(--accent)">1,500</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px">words recommended</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px">
+        <div style="font-size:13px;font-weight:500;margin-bottom:4px">College Essay</div>
+        <div style="font-family:var(--mono);font-size:20px;color:var(--accent)">650</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px">words typical limit</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="faq-section">
+  <h2 class="faq-title">Frequently asked questions</h2>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFAQ(this)">How many words is a 5-minute read? <span>+</span></div>
+    <div class="faq-a">At an average adult reading speed of 200 words per minute, a 5-minute read is approximately 1,000 words. This tool calculates reading time based on that standard rate.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFAQ(this)">Does this count characters with or without spaces? <span>+</span></div>
+    <div class="faq-a">Both. The tool shows total characters (including spaces) and characters without spaces separately. Most social media platforms count characters including spaces, while some writing tools exclude them.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFAQ(this)">Is my text stored or sent anywhere? <span>+</span></div>
+    <div class="faq-a">No. All counting happens entirely in your browser using JavaScript. Your text is never sent to any server. You can even use this tool offline once the page has loaded.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFAQ(this)">How are sentences counted? <span>+</span></div>
+    <div class="faq-a">Sentences are counted by detecting ending punctuation: periods, exclamation marks, and question marks. This works well for standard prose but may not perfectly handle abbreviations or ellipses.</div>
+  </div>
+</section>
+
+<div class="related">
+  <div class="related-title">Other tools you might need</div>
+  <div class="related-grid">
+    <a href="qr-code-generator.html" class="related-card">
+      <div class="related-card-icon">▣</div>
+      <div class="related-card-name">QR Code Generator</div>
+      <div class="related-card-desc">Create scannable QR codes instantly</div>
+    </a>
+    <a href="password-generator.html" class="related-card">
+      <div class="related-card-icon">⬤</div>
+      <div class="related-card-name">Password Generator</div>
+      <div class="related-card-desc">Create secure passwords instantly</div>
+    </a>
+    <a href="url-shortener.html" class="related-card">
+      <div class="related-card-icon">◎</div>
+      <div class="related-card-name">URL Shortener</div>
+      <div class="related-card-desc">Shorten long links in one click</div>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div style="font-weight:500;margin-bottom:4px">ToolHub</div>
+  <div>Free online tools — no sign-up, no tracking, no ads.</div>
+  <div class="footer-links">
+    <a href="index.html">All Tools</a>
+    <a href="sitemap.xml">Sitemap</a>
+    <a href="#">Privacy</a>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+const LIMITS = [
+  { name: 'X (Twitter)', limit: 280 },
+  { name: 'Instagram caption', limit: 2200 },
+  { name: 'LinkedIn post', limit: 3000 },
+  { name: 'SEO meta description', limit: 160 },
+  { name: 'SMS message', limit: 160 },
+];
+
+const STOP_WORDS = new Set(['the','a','an','and','or','but','in','on','at','to','for','of','with','is','are','was','were','it','that','this','as','by','be','i','you','he','she','we','they','not','from','have','has','had','do','did','does','so','if','up','about','out','into','than','then','when','there','their','can','will','would','could','should','my','your','his','her','our','its','been','been','just','also','more','some','all','been','one','two','three']);
+
+function countWords() {
+  const text = document.getElementById('wc-input').value;
+  const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).filter(w => w.length > 0).length;
+  const chars = text.length;
+  const charsNo = text.replace(/\s/g, '').length;
+  const sentences = text.trim() === '' ? 0 : (text.match(/[.!?]+(\s|$)/g) || []).length;
+  const paragraphs = text.trim() === '' ? 0 : text.split(/\n\s*\n/).filter(p => p.trim()).length || (text.trim() ? 1 : 0);
+  const readMin = words === 0 ? 0 : Math.max(1, Math.round(words / 200));
+
+  document.getElementById('wc-words').textContent = words.toLocaleString();
+  document.getElementById('wc-chars').textContent = chars.toLocaleString();
+  document.getElementById('wc-chars-no').textContent = charsNo.toLocaleString();
+  document.getElementById('wc-sentences').textContent = sentences.toLocaleString();
+  document.getElementById('wc-paragraphs').textContent = paragraphs.toLocaleString();
+  document.getElementById('wc-read').textContent = readMin;
+
+  // Top keywords
+  if (words > 5) {
+    const freq = {};
+    text.toLowerCase().replace(/[^a-z\s]/g, '').split(/\s+/).filter(w => w.length > 3 && !STOP_WORDS.has(w)).forEach(w => freq[w] = (freq[w]||0)+1);
+    const top = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,8);
+    document.getElementById('top-words-section').style.display = 'block';
+    document.getElementById('top-words-list').innerHTML = top.map(([w,c]) => `<span class="top-word">${w} <span style="color:var(--accent);margin-left:3px">${c}</span></span>`).join('');
+  } else {
+    document.getElementById('top-words-section').style.display = 'none';
+  }
+
+  // Platform limits
+  if (chars > 0) {
+    document.getElementById('limits-section').style.display = 'block';
+    document.getElementById('limits-body').innerHTML = LIMITS.map(p => {
+      const ok = chars <= p.limit;
+      const pct = Math.min(100, Math.round((chars / p.limit) * 100));
+      return `<tr>
+        <td>${p.name}</td>
+        <td style="font-family:var(--mono)">${p.limit.toLocaleString()}</td>
+        <td style="color:${ok ? 'var(--accent)' : 'var(--red)'}">${ok ? `✓ ${chars}/${p.limit}` : `✗ ${chars - p.limit} over limit`}</td>
+      </tr>`;
+    }).join('');
+  } else {
+    document.getElementById('limits-section').style.display = 'none';
+  }
+}
+
+function clearWC() {
+  document.getElementById('wc-input').value = '';
+  countWords();
+}
+
+function copyStats() {
+  const w = document.getElementById('wc-words').textContent;
+  const c = document.getElementById('wc-chars').textContent;
+  const r = document.getElementById('wc-read').textContent;
+  const text = `Words: ${w} | Characters: ${c} | Reading time: ${r} min`;
+  navigator.clipboard.writeText(text).then(() => showToast('Stats copied!'));
+}
+
+function toggleFAQ(el) { el.parentElement.classList.toggle('open'); }
+</script>
+</body>
+</html>
