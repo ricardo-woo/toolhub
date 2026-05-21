@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free QR Code Generator — Create & Download QR Codes Online | ToolHub</title>
+  <meta name="description" content="Generate a free QR code for any URL, text, email, or phone number. Download as PNG in seconds. No sign-up, no watermark, no limits.">
+  <meta name="keywords" content="free qr code generator, qr code maker online, create qr code, qr code creator, generate qr code, custom qr code">
+  <meta property="og:title" content="Free QR Code Generator — ToolHub">
+  <meta property="og:description" content="Create a QR code for any URL or text instantly. Download as PNG. Free, no sign-up.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://toolhub.io/tools/qr-code-generator">
+  <link rel="canonical" href="https://toolhub.io/tools/qr-code-generator">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Free QR Code Generator",
+    "url": "https://toolhub.io/tools/qr-code-generator",
+    "description": "Generate free QR codes for URLs, text, emails, and phone numbers. Download as PNG instantly.",
+    "applicationCategory": "UtilityApplication",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What can I put in a QR code?",
+        "acceptedAnswer": { "@type": "Answer", "text": "You can encode any URL, plain text, email address, phone number, SMS message, Wi-Fi credentials, or vCard contact info. Most smartphones can scan all of these natively." }
+      },
+      {
+        "@type": "Question",
+        "name": "Are these QR codes free to use commercially?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every QR code generated on ToolHub is completely free, has no watermark, and can be used for personal or commercial purposes without restriction." }
+      },
+      {
+        "@type": "Question",
+        "name": "What size QR code should I download?",
+        "acceptedAnswer": { "@type": "Answer", "text": "For digital use (screens, emails), 256px is fine. For print (flyers, menus, signage), choose 400px or larger to ensure it scans cleanly at real-world sizes." }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo"><span class="logo-dot"></span> ToolHub</a>
+  <div class="nav-links">
+    <a href="qr-code-generator.html" class="nav-link active">QR Code</a>
+    <a href="password-generator.html" class="nav-link">Password</a>
+    <a href="word-counter.html" class="nav-link">Word Counter</a>
+    <a href="url-shortener.html" class="nav-link">URL Shortener</a>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="../index.html">ToolHub</a><span>›</span> QR Code Generator
+</div>
+
+<div class="page-hero">
+  <h1>Free <em>QR Code</em> Generator</h1>
+  <p>Create a scannable QR code for any URL, text, or contact info. Download as PNG — no watermark, no sign-up, no limits.</p>
+</div>
+
+<main class="tool-page">
+  <div class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-card-title">
+        <div class="tool-icon" style="background:rgba(200,245,60,0.12)">▣</div>
+        <div class="tool-name">QR Code Generator</div>
+      </div>
+      <span class="tag" style="background:rgba(200,245,60,0.1);color:var(--accent)">Free · No watermark</span>
+    </div>
+    <div class="tool-body">
+      <p class="tool-desc">Enter a URL, text, email address, phone number, or any content below. Your QR code is generated instantly and ready to download.</p>
+
+      <div class="qr-layout">
+        <div>
+          <div class="field-group">
+            <label class="field-label">URL or Text Content</label>
+            <input type="text" id="qr-input" placeholder="https://yourwebsite.com" oninput="generateQR()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Error Correction</label>
+            <select id="qr-ec" onchange="generateQR()" style="margin-bottom:10px">
+              <option value="L">Low — smaller file</option>
+              <option value="M" selected>Medium — recommended</option>
+              <option value="H">High — best for logos/damage</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Download Size</label>
+            <select id="qr-size" onchange="generateQR()">
+              <option value="180">Small (180px) — web/email</option>
+              <option value="256" selected>Medium (256px) — standard</option>
+              <option value="400">Large (400px) — print</option>
+              <option value="600">Extra large (600px) — signage</option>
+            </select>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="generateQR()">Generate QR Code</button>
+            <button class="btn btn-ghost" onclick="downloadQR()">↓ Download PNG</button>
+          </div>
+        </div>
+        <div id="qr-output">
+          <div class="qr-placeholder">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/><rect x="18" y="14" width="3" height="3"/><rect x="14" y="18" width="3" height="3"/><rect x="18" y="18" width="3" height="3"/></svg>
+            <span>Preview</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="qr-tips" style="margin-top:18px;display:none">
+        <p style="font-size:13px;color:var(--muted)">✓ QR code ready. Test it with your phone camera before printing. Use <strong>High</strong> error correction if you plan to add a logo on top.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW TO USE -->
+  <section style="margin-top:40px">
+    <h2 style="font-size:18px;font-weight:600;margin-bottom:14px;letter-spacing:-0.3px">How to create a QR code</h2>
+    <ol style="font-size:14px;color:var(--muted);line-height:2;padding-left:20px">
+      <li>Paste your URL or type any text into the box above</li>
+      <li>Choose error correction level (Medium works for most uses)</li>
+      <li>Select your download size based on where you'll use it</li>
+      <li>Click <strong style="color:var(--text)">Generate QR Code</strong> — preview appears instantly</li>
+      <li>Click <strong style="color:var(--text)">Download PNG</strong> to save it to your device</li>
+    </ol>
+  </section>
+</main>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <h2 class="faq-title">Frequently asked questions</h2>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFAQ(this)">What can I put in a QR code? <span>+</span></div>
+    <div class="faq-a">You can encode any URL, plain text, email address, phone number, SMS message, Wi-Fi credentials, or vCard contact info. Most smartphones can scan all of these natively without any app.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFAQ(this)">Are these QR codes free to use commercially? <span>+</span></div>
+    <div class="faq-a">Yes — completely free, no watermark, and usable for any personal or commercial purpose. No attribution required.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFAQ(this)">What size should I use for printing? <span>+</span></div>
+    <div class="faq-a">For most print materials (menus, flyers, business cards), use at least 400px. For large-format signage, use 600px. A QR code should be at least 2cm × 2cm when printed.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFAQ(this)">What is error correction and which level should I choose? <span>+</span></div>
+    <div class="faq-a">Error correction allows a QR code to be scanned even if part of it is damaged or obscured. Low is fine for clean digital uses. High is recommended if you plan to place a logo over part of the QR code or use it in environments where it might get dirty.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFAQ(this)">Do these QR codes expire? <span>+</span></div>
+    <div class="faq-a">No. QR codes generated here are static — they encode the data directly. As long as the URL or content you encoded is still valid, the QR code works forever.</div>
+  </div>
+</section>
+
+<!-- RELATED -->
+<div class="related">
+  <div class="related-title">Other tools you might need</div>
+  <div class="related-grid">
+    <a href="url-shortener.html" class="related-card">
+      <div class="related-card-icon">◎</div>
+      <div class="related-card-name">URL Shortener</div>
+      <div class="related-card-desc">Shorten your link before making a QR code</div>
+    </a>
+    <a href="password-generator.html" class="related-card">
+      <div class="related-card-icon">⬤</div>
+      <div class="related-card-name">Password Generator</div>
+      <div class="related-card-desc">Create secure passwords instantly</div>
+    </a>
+    <a href="word-counter.html" class="related-card">
+      <div class="related-card-icon">◈</div>
+      <div class="related-card-name">Word Counter</div>
+      <div class="related-card-desc">Count words and characters in any text</div>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div style="font-weight:500;margin-bottom:4px">ToolHub</div>
+  <div>Free online tools — no sign-up, no tracking, no ads.</div>
+  <div class="footer-links">
+    <a href="../index.html">All Tools</a>
+    <a href="../sitemap.xml">Sitemap</a>
+    <a href="#">Privacy</a>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function generateQR() {
+  const val = document.getElementById('qr-input').value.trim();
+  const size = parseInt(document.getElementById('qr-size').value);
+  const ec = document.getElementById('qr-ec').value;
+  const wrap = document.getElementById('qr-output');
+  wrap.innerHTML = '';
+  document.getElementById('qr-tips').style.display = 'none';
+  if (!val) {
+    wrap.innerHTML = `<div class="qr-placeholder"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/></svg><span>Preview</span></div>`;
+    return;
+  }
+  const levels = { L: QRCode.CorrectLevel.L, M: QRCode.CorrectLevel.M, H: QRCode.CorrectLevel.H };
+  try {
+    new QRCode(wrap, { text: val, width: size, height: size, colorDark: '#000000', colorLight: '#ffffff', correctLevel: levels[ec] });
+    document.getElementById('qr-tips').style.display = 'block';
+  } catch(e) {}
+}
+
+function downloadQR() {
+  const canvas = document.querySelector('#qr-output canvas');
+  const img = document.querySelector('#qr-output img');
+  const src = canvas ? canvas.toDataURL() : (img ? img.src : null);
+  if (!src) { showToast('Generate a QR code first'); return; }
+  const a = document.createElement('a');
+  a.href = src; a.download = 'qrcode-toolhub.png'; a.click();
+  showToast('QR code downloaded!');
+}
+
+function toggleFAQ(el) {
+  el.parentElement.classList.toggle('open');
+}
+</script>
+</body>
+</html>
